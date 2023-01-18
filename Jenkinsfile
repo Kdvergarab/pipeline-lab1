@@ -4,7 +4,7 @@ pipeline {
     
    stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: "*/$env.branch"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-node1', url: "https://github.com/Kdvergarab/pipeline-lab1.git"]]])
+                checkout([$class: 'GitSCM', branches: [[name: "*/$env.branch"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "$env.credential", url: "https://github.com/Kdvergarab/pipeline-lab1.git"]]])
             }
         }
     stage ("Defining technology") {
@@ -26,14 +26,14 @@ pipeline {
                         agent {
                 docker { image 'maven:3.8.7-eclipse-temurin-11' }
             }
-                echo "install $env.TECNOLOGY success"
+                echo "install $env.TECHNOLOGY success"
                  sh 'mvn --version'
                          
                         } else if (env.TECHNOLOGY == 'python'){
                              agent {
                 docker { image 'python:3.7' }
             }
-            echo "install $env.TECNOLOGY success"
+            echo "install $env.TECHNOLOGY success"
              sh 'python --version'
                                           
                 }
