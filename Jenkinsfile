@@ -2,12 +2,7 @@ pipeline {
   agent any
     stages {
     
-         stage('Checkout') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: "*/${env.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: "https://github.com/${env.REPOSITORY_KEY}/${env.REPOSITORY_NAME}.git"]]])
-                 }
-            }
-      
+             
          stage('Install Technology') {
             steps {
                 script {
@@ -35,8 +30,14 @@ pipeline {
             
         }  
          stage('Build') {
+           
             steps {
                 sh '${MAVEN_HOME}/mvn -B -DskipTests clean package'
+            }
+          steps('Checkout') {
+            step {
+                checkout([$class: 'GitSCM', branches: [[name: "*/${env.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: "https://github.com/${env.REPOSITORY_KEY}/${env.REPOSITORY_NAME}.git"]]])
+                 }
             }
         }       
          stage('Test') {
