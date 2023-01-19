@@ -31,9 +31,21 @@ pipeline {
                 }
             }      
             
-        }         
-              
+        }  
+         stage('Build') {
+            steps {
+                sh '$MAVEN_HOME/mvn -B -DskipTests clean package'
+            }
+        }       
+         stage('Test') {
+            steps {
+                sh '$MAVEN_HOME/mvn test'
+            }
+            post {
+                always {
+                    junit "target/surefire-reports/*.xml"
+                }
+            }
+        }     
     }
 }
-
-
