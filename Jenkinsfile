@@ -7,10 +7,7 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: "*/$env.BRANCH"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-node1', url: "https://github.com'$env.REPOSITORY_KEY'$env.REPOSITORY_NAME'.git"]]])
                  }
             }
-         stage ("Defining technology") {
-
-               echo " Selected technology is $env.TECHNOLOGY"
-                } 
+      
          stage('Install Technology') {
             steps {
                 script {
