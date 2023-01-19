@@ -4,7 +4,7 @@ pipeline {
     
    stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: "*/$env.BRANCH"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "$env.CREDENTIAL", url: "$env.URL_GIT"]]])
+                checkout([$class: 'GitSCM', branches: [[name: "*/$env.BRANCH"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "$env.CREDENTIAL", url: "https://github.com'$env.REPOSITORY_KEY'$env.REPOSITORY_NAME'.git"]]])
             }
         }
     stage ("Defining technology") {
@@ -27,19 +27,12 @@ pipeline {
                 docker { image 'python:3.7' }
             }
             echo "install $env.TECHNOLOGY success"
-             sh 'python --version'
-                                          
+             sh 'python --version'                                
                 }
-            
-            }
-     
-              
-              
-            
-        }         
-              
-    }}
+            }   
+        }                 
+    }
+  }
+ }
 }
-}
-
 
