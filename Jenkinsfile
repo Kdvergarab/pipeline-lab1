@@ -34,12 +34,12 @@ pipeline {
         }  
          stage('Build') {
             steps {
-                sh 'cd /opt/maven/bin/mvn -B -DskipTests clean package'
+                sh 'cd $MAVEN_HOME/mvn -B -DskipTests clean package'
             }
         }       
          stage('Test') {
             steps {
-                sh 'cd /opt/maven/bin/mvn test'
+                sh 'cd $MAVEN_HOME/mvn test'
             }
             post {
                 always {
