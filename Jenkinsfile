@@ -4,7 +4,7 @@ pipeline {
     
          stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: "*/$env.BRANCH"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-node1', url: "https://github.com'$env.REPOSITORY_KEY'$env.REPOSITORY_NAME'.git"]]])
+                checkout([$class: 'GitSCM', branches: [[name: "*/$env.BRANCH"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-node1', url: "https://github.com/${env.REPOSITORY_KEY}/${env.REPOSITORY_NAME}.git"]]])
                  }
             }
       
@@ -35,6 +35,5 @@ pipeline {
               
     }
 }
-
 
 
