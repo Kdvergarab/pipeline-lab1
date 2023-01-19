@@ -50,6 +50,6 @@ pipeline {
     }
         environment {
        
-        MAVEN_HOME="/opt/maven/bin/"
+        MAVEN_HOME="/usr/share/maven/bin"
           }
 }
