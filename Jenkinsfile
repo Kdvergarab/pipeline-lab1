@@ -48,4 +48,8 @@ pipeline {
             }
         }     
     }
+        environment {
+       
+        MAVEN_HOME="/opt/maven/bin/"
+          }
 }
