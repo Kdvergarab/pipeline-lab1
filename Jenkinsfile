@@ -9,7 +9,7 @@ pipeline {
         }
     stage ("Defining technology") {
       steps { echo " Selected technology is $env.TECHNOLOGY"}
-        
+    } 
     stage('Install Technology') {
             steps {
                 script {
@@ -39,7 +39,6 @@ pipeline {
         }         
               
     }}
-}
 }
 
 
