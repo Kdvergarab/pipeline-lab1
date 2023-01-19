@@ -25,7 +25,9 @@ pipeline {
                 docker { image 'python:3.7' }
                     }
                  echo "install ${env.TECHNOLOGY} success"
-                  sh 'python --version'
+                          sh 'python --version'
+                          sh 'hostname'
+                          sh 'pwd'
                                           
                   }
                 }
