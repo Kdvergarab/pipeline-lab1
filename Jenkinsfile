@@ -1,59 +1,55 @@
 pipeline {
-  agent any
-    stages {
-    
-             
-         stage('Install Technology') {
-            steps {
-                script {
-                                             
-                        if (${env.TECHNOLOGY} == 'java') {
-                       
-                        agent {
-                docker { image 'maven:3.8.7-eclipse-temurin-11' }
-                  }
-                echo "install ${env.TECHNOLOGY} success"
-                 sh 'mvn --version'
-                         
-                        } else if (${env.TECHNOLOGY} == 'python'){
-                             agent {
-                docker { image 'python:3.7' }
-                    }
-                 echo "install ${env.TECHNOLOGY} success"
-                          sh 'python --version'
-                          sh 'hostname'
-                          sh 'pwd'
-                                          
-                  }
-                }
-            }      
-            
-        }  
-         stage('Build') {
-           
-            steps {
-                sh '${MAVEN_HOME}/mvn -B -DskipTests clean package'
-            }
-          steps('Checkout') {
-            step {
-                checkout([$class: 'GitSCM', branches: [[name: "*/${env.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: "https://github.com/${env.REPOSITORY_KEY}/${env.REPOSITORY_NAME}.git"]]])
-                 }
-            }
-        }       
-         stage('Test') {
-            steps {
-                sh '${MAVEN_HOME}/mvn test'
-            }
-            post {
-                always {
-                    junit "target/surefire-reports/*.xml"
-                }
-            }
-        }     
-    }
-        environment {
-       
-        MAVEN_HOME="/usr/share/maven/bin"
-          }
-}
 
+  agent any 
+
+  stages {
+    stage('Image Config') {
+      steps {
+        script {
+          if (env.TECHNOLOGY == 'java') {
+            dockerImage = "maven:3.8.7-eclipse-temurin-11"
+            println "install $env.TECHNOLOGY success"
+          } else if (env.TECHNOLOGY == 'python') {
+            dockerImage = "python:3.7"
+            println "install $env.TECHNOLOGY success"
+          } else {
+            println "Please select a technology"
+          }
+        }
+      }
+    }
+    stage('Image Install') {
+        agent {
+          docker {
+            image "${dockerImage}"
+            args "-u 0:0" // Force container user root
+            }}
+            stages{
+                stage('Checkout'){
+                    steps{ 
+                      
+                     checkout([$class: 'GitSCM', branches: [[name: "*/main"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github-credentials', url: "https://github.com/Kdvergarab/pipeline-lab1.git"]]])
+                     
+                    }
+                }
+               stage('Build'){
+                    steps{
+                            sh "hostname" 
+                            
+                        } }
+                stage('Tests'){
+                    steps {
+                                sh "hostname"
+                                }
+                            
+                        }
+                stage('SonarQube'){
+                      steps{  sh "hostname"
+                            }
+                            }
+                            }
+                            }
+                            }
+        
+    }
+   
