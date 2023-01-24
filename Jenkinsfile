@@ -137,8 +137,9 @@ pipeline {
                     sshagent(credentials: ['ssh-nodo1']) {
                     sh '''
                         [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
-                        ssh-keyscan -t rsa,dsa 192.168.1.161 >> ~/.ssh/known_hosts
-                        scp $WORKSPACE/target/deployment-java-$BUILD_NUMBER.jar jenkins@192.168.1.161:/tmp/deployment_beta
+                        ssh-keyscan -t rsa,dsa ${SERVER_IP} >> ~/.ssh/known_hosts
+                        scp $WORKSPACE/target/deployment-java-$BUILD_NUMBER.jar jenkins@${SERVER_IP}:/tmp/deployment_beta
+                        
                       
                     '''
                 }
