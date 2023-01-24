@@ -45,7 +45,11 @@ def SonarQube(technology){
                     -Dsonar.projectKey=$REPOSITORY_KEY \
                     -Dsonar.projectName=$REPOSITORY_NAME \
                     -Dsonar.projectVersion=1.0 \
-                    -Dsonar.sourceEncoding=UTF-8
+                    -Dsonar.sourceEncoding=UTF-8 \
+                    -Donar.languaje=java \
+                    -Dsonar.login=admin \
+                    -Dsonar.password=19187962 \
+                    -Dsonar.exclusions=src \
                     '''
             
         break
