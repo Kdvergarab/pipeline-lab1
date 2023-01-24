@@ -123,10 +123,28 @@ pipeline {
                     withSonarQubeEnv(installationName: 'sonarqube'){
                         SonarQube("${TECHNOLOGY}")
                     }
-                    
-                                            
-                                                }
-               }
+                      }                   
+                   }
+                stage('Quality Gate'){
+                    steps{
+                timeout(time: 2, unit: 'MINUTES'){
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+                stage('Move .jar'){
+                 steps{
+                    sshagent(credentials: ['ssh-nodo1']) {
+                    sh '''
+                        [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                        ssh-keyscan -t rsa,dsa 192.168.1.161 >> ~/.ssh/known_hosts
+                        scp $WORKSPACE/target/deployment-java-$BUILD_NUMBER.jar jenkins@192.168.1.161:/tmp/deployment_beta
+                      
+                    '''
+                }
+            }
+        }
+
              }
             }
         }
