@@ -1,6 +1,6 @@
 def Build (technology){
     switch(technology) {
-        case "maven":
+        case "Maven":
             sh '''
                 mvn --v
                 mvn -B -DskipTests clean package
