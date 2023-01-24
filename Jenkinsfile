@@ -116,11 +116,7 @@ pipeline {
                             Tests ("${TECHNOLOGY}")                               
                                 }
 
-                    post {
-                          always {
-                                     junit 'target/surefire-reports/*.xml'
-                                }
-                         }
+              
                 }  
 
                 stage('SonarQube'){
