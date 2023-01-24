@@ -42,8 +42,8 @@ def SonarQube(technology){
         case 'Maven':
               sh '''
                      mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar \
-                    -Dsonar.projectKey=$TECHNOLOGY \
-                    -Dsonar.projectName=$TECHNOLOGY \
+                    -Dsonar.projectKey=$REPOSITORY_KEY \
+                    -Dsonar.projectName=$REPOSITORY_NAME \
                     -Dsonar.projectVersion=1.0 \
                     -Dsonar.sourceEncoding=UTF-8
                     '''
@@ -53,8 +53,8 @@ def SonarQube(technology){
             sh '''
             sonar-scanner \
             -Dsonar.lenguage=py \
-            -Dsonar.projectKey=$TECHNOLOGY\
-            -Dsonar.projectName=$TECHNOLOGY\
+            -Dsonar.projectKey=$REPOSITORY_KEY \
+            -Dsonar.projectName=$REPOSITORY_NAME \
             -Dsonar.sourceEnconding=UTF-8 \
             -Dsonar.projectVersion=0.1 \
             '''
@@ -116,8 +116,7 @@ pipeline {
                             Tests ("${TECHNOLOGY}")                               
                                 }
 
-              
-                }  
+                }
 
                 stage('SonarQube'){
                       steps{  
