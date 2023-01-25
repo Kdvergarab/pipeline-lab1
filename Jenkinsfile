@@ -140,7 +140,7 @@ pipeline {
                  steps{
                     sshagent(credentials: ['ssh-nodo1']) {
                     sh '''
-                        [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                        [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 700 ~/.ssh
                         ssh-keyscan -t rsa,dsa ${SERVER_IP} >> ~/.ssh/known_hosts
                         scp $WORKSPACE/target/deployment-java-$BUILD_NUMBER.jar jenkins@${SERVER_IP}:/tmp/deployment_beta
                         
