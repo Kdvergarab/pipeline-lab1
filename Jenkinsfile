@@ -55,12 +55,14 @@ def SonarQube(technology){
         break
         case 'Python':
             sh '''
-            sonar-scanner \
-            -Dsonar.lenguage=py \
+            
             -Dsonar.projectKey=$REPOSITORY_KEY \
             -Dsonar.projectName=$REPOSITORY_NAME \
+            -Dsonar.lenguage=py \
             -Dsonar.sourceEnconding=UTF-8 \
             -Dsonar.projectVersion=0.1 \
+            -Dsonar.python.coverage.reportPath=coverage.xml \
+            -Dsonar.python.xunit.reportPath=nosetests.xml \
             '''
             
         break
